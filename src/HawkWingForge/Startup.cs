@@ -47,7 +47,7 @@ namespace HawkWingForge
             if (_env.IsDevelopment())
             {
                 services.AddDbContext<ApplicationDbContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                    options.UseSqlServer(Configuration.GetConnectionString("DevConnection")));
             }
             else
             {
