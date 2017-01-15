@@ -27,6 +27,16 @@ namespace HawkWingForge.Controllers
             return View();
         }
 
+        public IActionResult Forge()
+        {
+            return View();
+        }
+
+        public IActionResult Smith()
+        {
+            return View();
+        }
+
         public IActionResult Error()
         {
             return View();
