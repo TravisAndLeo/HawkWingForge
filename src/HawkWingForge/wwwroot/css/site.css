@@ -53,3 +53,13 @@ img.center {
     display: block;
     margin: 0 auto;
 }
+
+.carousel {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+}
+
+#indexContent {
+    padding-top: 500px;
+}

@@ -37,6 +37,11 @@ namespace HawkWingForge.Controllers
             return View();
         }
 
+        public IActionResult Blades()
+        {
+            return View();
+        }
+
         public IActionResult Error()
         {
             return View();
