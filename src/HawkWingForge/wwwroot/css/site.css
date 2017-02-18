@@ -36,7 +36,7 @@ textarea {
 }
 
 /* Make .svg files in the carousel display properly in older browsers */
-.carousel-inner .item img[src$=".svg"]
+.carousel-inner .item img[src$=".jpg"]
 {
     width: 100%;
 }
@@ -47,4 +47,19 @@ textarea {
   .carousel-caption {
     display: none
   }
+}
+
+img.center {
+    display: block;
+    margin: 0 auto;
+}
+
+.carousel {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+}
+
+#indexContent {
+    padding-top: 500px;
 }
