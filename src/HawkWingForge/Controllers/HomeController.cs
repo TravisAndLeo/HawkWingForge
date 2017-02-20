@@ -15,15 +15,11 @@ namespace HawkWingForge.Controllers
 
         public IActionResult About()
         {
-            ViewData["Message"] = "Your application description page.";
-
             return View();
         }
 
         public IActionResult Contact()
         {
-            ViewData["Message"] = "Your contact page.";
-
             return View();
         }
 
@@ -38,6 +34,11 @@ namespace HawkWingForge.Controllers
         }
 
         public IActionResult Blades()
+        {
+            return View();
+        }
+
+        public IActionResult Process()
         {
             return View();
         }
