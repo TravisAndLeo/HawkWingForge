@@ -6,6 +6,7 @@ function getFormData() {
     data.email = document.getElementById("email").value;
     data.message = document.getElementById("message").value;
     data.name = document.getElementById("name").value;
+    data.telephone = document.getElementById("telephone").value;
     console.log(data);
     return data;
 }
