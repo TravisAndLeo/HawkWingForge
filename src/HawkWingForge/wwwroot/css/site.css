@@ -34,21 +34,3 @@ textarea {
     content: "]";
     padding-left: 0.5em;
 }
-
-/* Make .svg files in the carousel display properly in older browsers */
-.carousel-inner .item img[src$=".jpg"]
-{
-    width: 100%;
-}
-
-/* Hide/rearrange for smaller screens */
-@media screen and (max-width: 767px) {
-  /* Hide captions */
-  .carousel-caption {
-    display: none
-  }
-}
-
-#innerCarousel{
-    max-height: 450px;
-}

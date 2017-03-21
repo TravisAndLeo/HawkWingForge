@@ -1,0 +1,18 @@
+﻿/* Make .svg files in the carousel display properly in older browsers */
+.carousel-inner .item img[src$=".jpg"]
+{
+    width: 100%;
+}
+
+/* Hide/rearrange for smaller screens */
+@media screen and (max-width: 767px) {
+  /* Hide captions */
+  .carousel-caption {
+    display: none
+  }
+}
+
+/* Set good max-height for carousel */
+#innerCarousel{
+    max-height: 450px;
+}
