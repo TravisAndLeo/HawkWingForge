@@ -48,7 +48,7 @@ namespace HawkWingForge.Controllers
         // GET: Products/Create
         public IActionResult Create()
         {
-            ViewData["ProductTypeId"] = new SelectList(_context.ProductType, "Id", "Id");
+            ViewData["ProductTypeId"] = new SelectList(_context.ProductType, "Id", "Type");
             return View();
         }
 
