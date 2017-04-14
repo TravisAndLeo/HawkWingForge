@@ -41,6 +41,8 @@ namespace HawkWingForge.Controllers
         // GET: /Account/Login
         [HttpGet]
         [AllowAnonymous]
+        [Route("/Account/login")]
+        [Route("/login")]
         public IActionResult Login(string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
@@ -89,6 +91,7 @@ namespace HawkWingForge.Controllers
         // GET: /Account/Register
         [HttpGet]
         [AllowAnonymous]
+        [Route("/register")]
         public IActionResult Register(string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
