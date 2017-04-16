@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Admin.cshtml";
 }
 
 <h2>Index</h2>
@@ -14,10 +14,10 @@
     <thead>
         <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Order)
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["SortOrderParam"]">@Html.DisplayNameFor(model => model.SortOrder)</a>
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Type)
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["TypeParam"]">@Html.DisplayNameFor(model => model.Type)</a>
                 </th>
             <th></th>
         </tr>
@@ -26,15 +26,15 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Order)
+                @Html.DisplayFor(modelItem => item.SortOrder)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Type)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
             </td>
         </tr>
 }

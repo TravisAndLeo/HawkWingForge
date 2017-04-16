@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Delete";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Admin.cshtml";
 }
 
 <h2>Delete</h2>
@@ -12,12 +12,12 @@
     <h4>ProductType</h4>
     <hr />
     <dl class="dl-horizontal">
-        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="ID" />
         <dt>
-            @Html.DisplayNameFor(model => model.Order)
+            @Html.DisplayNameFor(model => model.SortOrder)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Order)
+            @Html.DisplayFor(model => model.SortOrder)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Type)

@@ -5,25 +5,27 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using HawkWingForge.Data;
 using HawkWingForge.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HawkWingForge.Controllers
 {
+    [Authorize]
     public class ProductsController : Controller
     {
-        private readonly HawkWingForgeDevContext _context;
+        private readonly HawkWingForgeContext _context;
 
-        public ProductsController(HawkWingForgeDevContext context)
+        public ProductsController(HawkWingForgeContext context)
         {
             _context = context;    
         }
 
         // GET: Products
-        [Route("Products")]
         public async Task<IActionResult> Index()
         {
-            var hawkWingForgeDevContext = _context.Product.Include(p => p.ProductType);
-            return View(await hawkWingForgeDevContext.ToListAsync());
+            var hawkWingForgeContext = _context.Products.Include(p => p.ProductType);
+            return View(await hawkWingForgeContext.ToListAsync());
         }
 
         // GET: Products/Details/5
@@ -34,9 +36,9 @@ namespace HawkWingForge.Controllers
                 return NotFound();
             }
 
-            var product = await _context.Product
+            var product = await _context.Products
                 .Include(p => p.ProductType)
-                .SingleOrDefaultAsync(m => m.Id == id);
+                .SingleOrDefaultAsync(m => m.ID == id);
             if (product == null)
             {
                 return NotFound();
@@ -48,7 +50,7 @@ namespace HawkWingForge.Controllers
         // GET: Products/Create
         public IActionResult Create()
         {
-            ViewData["ProductTypeId"] = new SelectList(_context.ProductType, "Id", "Type");
+            ViewData["ProductTypeID"] = new SelectList(_context.ProductTypes, "ID", "Type");
             return View();
         }
 
@@ -57,7 +59,7 @@ namespace HawkWingForge.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,Price,Available,ProductTypeId")] Product product)
+        public async Task<IActionResult> Create([Bind("ID,Name,Description,Price,Available,ProductTypeID")] Product product)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +67,7 @@ namespace HawkWingForge.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewData["ProductTypeId"] = new SelectList(_context.ProductType, "Id", "Id", product.ProductTypeId);
+            ViewData["ProductTypeID"] = new SelectList(_context.ProductTypes, "ID", "ID", product.ProductTypeID);
             return View(product);
         }
 
@@ -77,12 +79,12 @@ namespace HawkWingForge.Controllers
                 return NotFound();
             }
 
-            var product = await _context.Product.SingleOrDefaultAsync(m => m.Id == id);
+            var product = await _context.Products.SingleOrDefaultAsync(m => m.ID == id);
             if (product == null)
             {
                 return NotFound();
             }
-            ViewData["ProductTypeId"] = new SelectList(_context.ProductType, "Id", "Id", product.ProductTypeId);
+            ViewData["ProductTypeID"] = new SelectList(_context.ProductTypes, "ID", "ID", product.ProductTypeID);
             return View(product);
         }
 
@@ -91,9 +93,9 @@ namespace HawkWingForge.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Price,Available,ProductTypeId")] Product product)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Description,Price,Available,ProductTypeID")] Product product)
         {
-            if (id != product.Id)
+            if (id != product.ID)
             {
                 return NotFound();
             }
@@ -107,7 +109,7 @@ namespace HawkWingForge.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProductExists(product.Id))
+                    if (!ProductExists(product.ID))
                     {
                         return NotFound();
                     }
@@ -118,7 +120,7 @@ namespace HawkWingForge.Controllers
                 }
                 return RedirectToAction("Index");
             }
-            ViewData["ProductTypeId"] = new SelectList(_context.ProductType, "Id", "Id", product.ProductTypeId);
+            ViewData["ProductTypeID"] = new SelectList(_context.ProductTypes, "ID", "ID", product.ProductTypeID);
             return View(product);
         }
 
@@ -130,9 +132,9 @@ namespace HawkWingForge.Controllers
                 return NotFound();
             }
 
-            var product = await _context.Product
+            var product = await _context.Products
                 .Include(p => p.ProductType)
-                .SingleOrDefaultAsync(m => m.Id == id);
+                .SingleOrDefaultAsync(m => m.ID == id);
             if (product == null)
             {
                 return NotFound();
@@ -146,15 +148,15 @@ namespace HawkWingForge.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var product = await _context.Product.SingleOrDefaultAsync(m => m.Id == id);
-            _context.Product.Remove(product);
+            var product = await _context.Products.SingleOrDefaultAsync(m => m.ID == id);
+            _context.Products.Remove(product);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
         private bool ProductExists(int id)
         {
-            return _context.Product.Any(e => e.Id == id);
+            return _context.Products.Any(e => e.ID == id);
         }
     }
 }

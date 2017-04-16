@@ -91,7 +91,7 @@ namespace HawkWingForge.Controllers
         // GET: /Account/Register
         [HttpGet]
         [AllowAnonymous]
-        [Route("/register")]
+        [Route("/account/register")]
         public IActionResult Register(string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
