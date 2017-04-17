@@ -22,6 +22,7 @@ namespace HawkWingForge.Controllers
         }
 
         // GET: ProductTypes
+        [AllowAnonymous]
         public async Task<IActionResult> Index(string sortOrder)
         {
             ViewData["TypeParam"] = string.IsNullOrEmpty(sortOrder) ? "type_desc" : "";
@@ -47,6 +48,7 @@ namespace HawkWingForge.Controllers
         }
 
         // GET: ProductTypes/Details/5
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -62,6 +64,13 @@ namespace HawkWingForge.Controllers
             }
 
             return View(productType);
+        }
+
+        // GET: ProductTypes/LoadProductTypes
+        [AllowAnonymous]
+        public async Task<List<ProductType>> LoadProductTypes()
+        {
+            return await _context.ProductTypes.OrderBy(pt => pt.SortOrder).AsNoTracking().ToListAsync();
         }
 
         // GET: ProductTypes/Create

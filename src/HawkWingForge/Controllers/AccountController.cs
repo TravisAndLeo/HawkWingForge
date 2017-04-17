@@ -133,6 +133,7 @@ namespace HawkWingForge.Controllers
         // POST: /Account/LogOff
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Route("/logoff")]
         public async Task<IActionResult> LogOff()
         {
             await _signInManager.SignOutAsync();

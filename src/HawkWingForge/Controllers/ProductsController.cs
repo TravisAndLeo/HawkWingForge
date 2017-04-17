@@ -22,6 +22,7 @@ namespace HawkWingForge.Controllers
         }
 
         // GET: Products
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             var hawkWingForgeContext = _context.Products.Include(p => p.ProductType);
@@ -29,6 +30,7 @@ namespace HawkWingForge.Controllers
         }
 
         // GET: Products/Details/5
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
