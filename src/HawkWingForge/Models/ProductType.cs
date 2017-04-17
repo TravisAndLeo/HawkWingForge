@@ -1,19 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace HawkWingForge.Models
 {
-    public partial class ProductType
+    public class ProductType
     {
-        public ProductType()
-        {
-            Product = new HashSet<Product>();
-        }
-
-        public int Id { get; set; }
-        public int Order { get; set; }
+        public int ID { get; set; }
+        public int SortOrder { get; set; }
         public string Type { get; set; }
-
-        public virtual ICollection<Product> Product { get; set; }
     }
 }

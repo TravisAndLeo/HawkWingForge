@@ -48,10 +48,14 @@ namespace HawkWingForge
             {
                 services.AddDbContext<ApplicationDbContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("DevConnection")));
+                services.AddDbContext<HawkWingForgeContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("DevConnection")));
             }
             else
             {
                 services.AddDbContext<ApplicationDbContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("HawkWingForgeConnection")));
+                services.AddDbContext<HawkWingForgeContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("HawkWingForgeConnection")));
             }
 
@@ -63,8 +67,7 @@ namespace HawkWingForge
 
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
-
-            services.AddDbContext<HawkWingForgeDevContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DevConnection")));
+            services.AddTransient<ISmsSender, AuthMessageSender>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

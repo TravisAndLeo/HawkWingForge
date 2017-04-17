@@ -91,7 +91,7 @@ namespace HawkWingForge.Controllers
         // GET: /Account/Register
         [HttpGet]
         [AllowAnonymous]
-        [Route("/register")]
+        [Route("/account/register")]
         public IActionResult Register(string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
@@ -133,6 +133,7 @@ namespace HawkWingForge.Controllers
         // POST: /Account/LogOff
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Route("/logoff")]
         public async Task<IActionResult> LogOff()
         {
             await _signInManager.SignOutAsync();

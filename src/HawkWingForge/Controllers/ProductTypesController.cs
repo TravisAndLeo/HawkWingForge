@@ -5,27 +5,50 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using HawkWingForge.Data;
 using HawkWingForge.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HawkWingForge.Controllers
 {
+    [Authorize]
     public class ProductTypesController : Controller
     {
-        private readonly HawkWingForgeDevContext _context;
+        private readonly HawkWingForgeContext _context;
 
-        public ProductTypesController(HawkWingForgeDevContext context)
+        public ProductTypesController(HawkWingForgeContext context)
         {
             _context = context;    
         }
 
         // GET: ProductTypes
-        [Route("ProductType")]
-        public async Task<IActionResult> Index()
+        [AllowAnonymous]
+        public async Task<IActionResult> Index(string sortOrder)
         {
-            return View(await _context.ProductType.ToListAsync());
+            ViewData["TypeParam"] = string.IsNullOrEmpty(sortOrder) ? "type_desc" : "";
+            ViewData["SortOrderParam"] = sortOrder == "SortOrder" ? "sortorder_desc" : "SortOrder";
+            var productTypes = from pt in _context.ProductTypes
+                               select pt;
+            switch (sortOrder)
+            {
+                case "type_desc":
+                    productTypes = productTypes.OrderByDescending(pt => pt.Type);
+                    break;
+                case "SortOrder":
+                    productTypes = productTypes.OrderBy(pt => pt.SortOrder);
+                    break;
+                case "sortorder_desc":
+                    productTypes = productTypes.OrderByDescending(pt => pt.SortOrder);
+                    break;
+                default:
+                    productTypes = productTypes.OrderBy(pt => pt.SortOrder);
+                    break;
+            }
+            return View(await productTypes.AsNoTracking().ToListAsync());
         }
 
         // GET: ProductTypes/Details/5
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,14 +56,21 @@ namespace HawkWingForge.Controllers
                 return NotFound();
             }
 
-            var productType = await _context.ProductType
-                .SingleOrDefaultAsync(m => m.Id == id);
+            var productType = await _context.ProductTypes
+                .SingleOrDefaultAsync(m => m.ID == id);
             if (productType == null)
             {
                 return NotFound();
             }
 
             return View(productType);
+        }
+
+        // GET: ProductTypes/LoadProductTypes
+        [AllowAnonymous]
+        public async Task<List<ProductType>> LoadProductTypes()
+        {
+            return await _context.ProductTypes.OrderBy(pt => pt.SortOrder).AsNoTracking().ToListAsync();
         }
 
         // GET: ProductTypes/Create
@@ -54,7 +84,7 @@ namespace HawkWingForge.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Order,Type")] ProductType productType)
+        public async Task<IActionResult> Create([Bind("ID,SortOrder,Type")] ProductType productType)
         {
             if (ModelState.IsValid)
             {
@@ -73,7 +103,7 @@ namespace HawkWingForge.Controllers
                 return NotFound();
             }
 
-            var productType = await _context.ProductType.SingleOrDefaultAsync(m => m.Id == id);
+            var productType = await _context.ProductTypes.SingleOrDefaultAsync(m => m.ID == id);
             if (productType == null)
             {
                 return NotFound();
@@ -86,9 +116,9 @@ namespace HawkWingForge.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Order,Type")] ProductType productType)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,SortOrder,Type")] ProductType productType)
         {
-            if (id != productType.Id)
+            if (id != productType.ID)
             {
                 return NotFound();
             }
@@ -102,7 +132,7 @@ namespace HawkWingForge.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProductTypeExists(productType.Id))
+                    if (!ProductTypeExists(productType.ID))
                     {
                         return NotFound();
                     }
@@ -124,8 +154,8 @@ namespace HawkWingForge.Controllers
                 return NotFound();
             }
 
-            var productType = await _context.ProductType
-                .SingleOrDefaultAsync(m => m.Id == id);
+            var productType = await _context.ProductTypes
+                .SingleOrDefaultAsync(m => m.ID == id);
             if (productType == null)
             {
                 return NotFound();
@@ -139,15 +169,15 @@ namespace HawkWingForge.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var productType = await _context.ProductType.SingleOrDefaultAsync(m => m.Id == id);
-            _context.ProductType.Remove(productType);
+            var productType = await _context.ProductTypes.SingleOrDefaultAsync(m => m.ID == id);
+            _context.ProductTypes.Remove(productType);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
         private bool ProductTypeExists(int id)
         {
-            return _context.ProductType.Any(e => e.Id == id);
+            return _context.ProductTypes.Any(e => e.ID == id);
         }
     }
 }
