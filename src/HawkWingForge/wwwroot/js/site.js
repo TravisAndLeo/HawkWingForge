@@ -1,5 +1,4 @@
 ﻿window.onload = function () {
-    console.log("onload");
     var xmlhttp = new XMLHttpRequest();
     var url = "/ProductTypes/LoadProductTypes";
 

@@ -7,12 +7,13 @@ function getFormData() {
     data.message = document.getElementById("message").value;
     data.name = document.getElementById("name").value;
     data.telephone = document.getElementById("telephone").value;
-    console.log(data);
+    //console.log(data);
     return data;
 }
 
 function handleFormSubmit(event) {  // handles form submit withtout any jquery
     event.preventDefault();           // we are submitting via xhr below
+    grecaptcha.execute();
     var data = getFormData();         // get the values submitted in the form
     var url = event.target.action;  
     var xhr = new XMLHttpRequest();
@@ -20,8 +21,8 @@ function handleFormSubmit(event) {  // handles form submit withtout any jquery
     // xhr.withCredentials = true;
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.onreadystatechange = function () {
-        console.log(xhr.status, xhr.statusText)
-        console.log(xhr.responseText);
+        //console.log(xhr.status, xhr.statusText)
+        //aconsole.log(xhr.responseText);
         document.getElementById('gform').style.display = 'none'; // hide form
         document.getElementById('thankyouMessage').style.display = 'block';
         return;
@@ -41,3 +42,8 @@ function loaded() {
 };
 
 document.addEventListener('DOMContentLoaded', loaded, false);
+
+//For the Google reCAPTCHA
+function onSubmit(token) {
+    document.getElementById("demo-form").submit();
+}
